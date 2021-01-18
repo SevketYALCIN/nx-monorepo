@@ -1,0 +1,160 @@
+{
+  "version": 2,
+  "projects": {
+    "prospect": {
+      "root": "apps/prospect",
+      "sourceRoot": "apps/prospect/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/prospect",
+            "index": "apps/prospect/src/index.html",
+            "main": "apps/prospect/src/main.tsx",
+            "polyfills": "apps/prospect/src/polyfills.ts",
+            "tsConfig": "apps/prospect/tsconfig.app.json",
+            "assets": [
+              "apps/prospect/src/favicon.ico",
+              "apps/prospect/src/assets"
+            ],
+            "styles": [
+              "apps/prospect/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/prospect/src/environments/environment.ts",
+                  "with": "apps/prospect/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "prospect:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "prospect:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/prospect/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/prospect"
+          ],
+          "options": {
+            "jestConfig": "apps/prospect/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "prospect-e2e": {
+      "root": "apps/prospect-e2e",
+      "sourceRoot": "apps/prospect-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/prospect-e2e/cypress.json",
+            "tsConfig": "apps/prospect-e2e/tsconfig.e2e.json",
+            "devServerTarget": "prospect:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "prospect:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/prospect-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "forms": {
+      "root": "libs/forms",
+      "sourceRoot": "libs/forms/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/forms/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/forms"
+          ],
+          "options": {
+            "jestConfig": "libs/forms/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "prospect"
+}
